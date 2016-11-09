@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+.pathline {
+	stroke-width: 3;
+	fill: none;
+}
+#pathlineOpen {
+	stroke: black;
+}
+#pathlineHigh {
+	stroke: purple;
+}
+#pathlineLow {
+	stroke: orange;
+}
+#pathlineClose {
+	stroke: yellow;
+}
+</style>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+var width  = 1024;
+var height = 768;
+
+d3.csv("./table.csv", function(data) {
+	console.log(data);
+	data.forEach(function(d) {
+		console.log(d.Open);
+		console.log(d.High);
+		console.log(d.Low);
+		console.log(d.Close);
+	});
+	var maxHigh = d3.max(data, function(d) { return d.High; });
+	var ln = data.length;
+	var ctrl  = d3.select("body").append("svg").attr("width", width).attr("height", height);
+	//定義Open畫線的規則
+	var linesOpen = d3.line().
+	x(function(d,i){ return i * (width/ln); }). 
+	y(function(d){ return height - d.Open * (height/maxHigh); });
+	//定義High畫線的規則
+	var linesHigh = d3.line().
+	x(function(d,i){ return i * (width/ln); }). 
+	y(function(d){ return height - d.High * (height/maxHigh); });
+	//定義Low畫線的規則
+	var linesLow = d3.line().
+	x(function(d,i){ return i * (width/ln); }).
+	y(function(d){ return height - d.Low * (height/maxHigh); });
+	//定義Close畫線的規則
+	var linesClose = d3.line().
+	x(function(d,i){ return i * (width/ln); }).
+	y(function(d){ return height - d.Close * (height/maxHigh); });
+	//開始Open畫線
+	ctrl.append("path").data([data]).
+	attr("class", "pathline").
+	attr("id", "pathlineOpen").
+	attr("d", linesOpen);
+	//開始High畫線
+	ctrl.append("path").data([data]).
+	attr("class", "pathline"). 
+	attr("id", "pathlineHigh").
+	attr("d", linesHigh);
+	//開始Low畫線
+	ctrl.append("path").data([data]).
+	attr("class", "pathline"). 
+	attr("id", "pathlineLow").
+	attr("d", linesLow);
+	//開始Close畫線
+	ctrl.append("path").data([data]).
+	attr("class", "pathline").  
+	attr("id", "pathlineClose").
+	attr("d", linesClose);
+});
+
+
+</script>
+</body>
+</html>
