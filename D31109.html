@@ -1,81 +1,81 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<!-- Website Template by freewebsitetemplates.com -->
+<html lang="zh">
 <head>
-<style type="text/css">
-.pathline {
-	stroke-width: 3;
-	fill: none;
-}
-#pathlineOpen {
-	stroke: black;
-}
-#pathlineHigh {
-	stroke: purple;
-}
-#pathlineLow {
-	stroke: orange;
-}
-#pathlineClose {
-	stroke: yellow;
-}
-</style>
-<script src="https://d3js.org/d3.v4.min.js"></script>
+	<meta charset="UTF-8">
+	<title>Cottages - Beach Resort Website Template</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<script src="https://d3js.org/d3.v4.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="https://kuochiacheng.github.io/self-service-trip/D3CSS.css" type="text/css">
+	<script src="https://yu-zheliu.github.io/Free-play/wc/wc.js" type="text/javascript"></script>
+	<script src="https://yu-zheliu.github.io/Free-play/wc/d3.layout.cloud.js" type="text/javascript"></script>
+	<script src="https://yu-zheliu.github.io/Free-play/wc/wordcloud.js" type="text/javascript"></script>
+	<script src="https://kuochiacheng.github.io/self-service-trip/D3JS.js" type="text/javascript"></script>
 </head>
 <body>
-<script type="text/javascript">
-var width  = 1024;
-var height = 768;
+<!--
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"> </script> -->
+	<div id="background">
+		<div id="page">
+			<div id="sidebar">
+				<a href="index.html" class="logo"><img src="images/logo.png" alt=""></a>
+				<ul class="navigation">
+					<li id="link1">
+						<a href="index.html">首頁</a>
+					</li>
+					<li id="link2" class="selected">
+						<a href="food.html">美食</a>
+					</li>
+					<li id="link3">
+						<a href="attractions.html">觀光景點</a>
+					</li>
+					<li id="link4">
+						<a href="team.html">團隊介紹</a>
+					</li>
+				</ul>
+			</div>
 
-d3.csv("./table.csv", function(data) {
-	console.log(data);
-	data.forEach(function(d) {
-		console.log(d.Open);
-		console.log(d.High);
-		console.log(d.Low);
-		console.log(d.Close);
-	});
-	var maxHigh = d3.max(data, function(d) { return d.High; });
-	var ln = data.length;
-	var ctrl  = d3.select("body").append("svg").attr("width", width).attr("height", height);
-	//定義Open畫線的規則
-	var linesOpen = d3.line().
-	x(function(d,i){ return i * (width/ln); }). 
-	y(function(d){ return height - d.Open * (height/maxHigh); });
-	//定義High畫線的規則
-	var linesHigh = d3.line().
-	x(function(d,i){ return i * (width/ln); }). 
-	y(function(d){ return height - d.High * (height/maxHigh); });
-	//定義Low畫線的規則
-	var linesLow = d3.line().
-	x(function(d,i){ return i * (width/ln); }).
-	y(function(d){ return height - d.Low * (height/maxHigh); });
-	//定義Close畫線的規則
-	var linesClose = d3.line().
-	x(function(d,i){ return i * (width/ln); }).
-	y(function(d){ return height - d.Close * (height/maxHigh); });
-	//開始Open畫線
-	ctrl.append("path").data([data]).
-	attr("class", "pathline").
-	attr("id", "pathlineOpen").
-	attr("d", linesOpen);
-	//開始High畫線
-	ctrl.append("path").data([data]).
-	attr("class", "pathline"). 
-	attr("id", "pathlineHigh").
-	attr("d", linesHigh);
-	//開始Low畫線
-	ctrl.append("path").data([data]).
-	attr("class", "pathline"). 
-	attr("id", "pathlineLow").
-	attr("d", linesLow);
-	//開始Close畫線
-	ctrl.append("path").data([data]).
-	attr("class", "pathline").  
-	attr("id", "pathlineClose").
-	attr("d", linesClose);
-});
-
-
+			<div id="content">
+				
+				<!-- 詞雲 by 劉宇哲-->
+				<div class="section" id="wordcloud">
+				<h2>詞雲</h2>
+				</div>
+				<!-- 橫條圖 by 劉宇哲-->
+				
+				<div class="section" id="barchart">
+					<h2>橫條圖</h2>
+					<script>
+      					var pop_rate = [['景美',28.26],['士林',27.48],['師大',20.01],['三和',10.84]];
+  						var div_data_bind = d3.select("#barchart").selectAll("div").data(pop_rate);
+  						div_set = div_data_bind.enter().append("div");
+  						div_data_bind.exit().remove();
+  						div_set.text(function(d,i) {
+   						 return i + " / " + d[0];
+      					});
+      
+      					div_set.style("height", "20px");
+  						div_set.style("background", "orange");
+  						div_set.style("margin", "5px");
+  						div_set.style("width", function(d,i) {
+    					 return (d[1] * 10)+"px";
+  						});
+  					</script>
+				</div>
+				
+				<!-- 折線圖 by 郭家城 -->
+				<div>
+    <a href="https://plot.ly/~Shu-YuanChuang/16/" target="_blank" title="" style="display: block; text-align: center;"><img src="https://plot.ly/~Shu-YuanChuang/16.png" alt="" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
+    <script data-plotly="Shu-YuanChuang:16"  src="https://plot.ly/embed.js" async></script>
+</div>
+			</div>
+		</div>
+	</div>
+<script>
+linechart();
+</script>
+<script>
+FOODwordcloud();
 </script>
 </body>
 </html>
